@@ -42,7 +42,7 @@ export default function Document() {
           }}
         />
       </Head>
-      <body>
+      <body className="text-neutral-900 dark:text-white bg-white dark:bg-neutral-900">
         <Main />
         <NextScript />
       </body>

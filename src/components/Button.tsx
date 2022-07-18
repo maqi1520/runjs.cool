@@ -10,7 +10,10 @@ export const Button: React.FC<
       {...props}
       className={clsx(
         className,
-        `bg-transparent border-blue-500 border rounded px-4 py-2 text-sm inline-flex items-center text-blue-500 active:bg-blue-500 active:text-white`
+        `bg-transparent border-blue-500 border rounded px-4 py-2 text-sm inline-flex items-center text-blue-500 active:bg-blue-500 active:text-white`,
+        {
+          "opacity-20 cursor-not-allowed": props.disabled,
+        }
       )}
     >
       {children}

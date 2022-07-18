@@ -1,3 +1,6 @@
+html {
+  font-size: 16px;
+}
 .input {
   @apply resize-none border rounded-xl p-2 focus:border-blue-500;
   @apply focus:ring-blue-500 dark:focus:ring-blue-500  focus:outline;

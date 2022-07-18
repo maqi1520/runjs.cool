@@ -9,10 +9,6 @@ import DarkIcon from "@/components/Icon/DarkIcon";
 import LogoIcon from "@/components/Icon/LogoIcon";
 import { toggleTheme } from "@/utils/themes";
 
-const APP_VERSION = process.env.COMMIT_SHA
-  ? `${process.env.PKG_VERSION}-${process.env.COMMIT_SHA.slice(0, 6)}`
-  : `${process.env.PKG_VERSION}-dev`;
-
 export const Sidebar = () => {
   const router = useRouter();
   const [showSidebar, setShowSidebar] = useState(false);
@@ -20,7 +16,7 @@ export const Sidebar = () => {
   useScrollLock(showSidebar);
 
   return (
-    <div className="fixed h-auto md:h-screen top-0 w-full md:w-80 border-r border-neutral-900/10 dark:border-neutral-50/[0.06] bg-white backdrop-blur dark:bg-neutral-900/75">
+    <div className="fixed h-auto md:h-screen top-0 w-full md:w-64 border-r border-neutral-900/10 dark:border-neutral-50/[0.06] bg-white backdrop-blur dark:bg-neutral-900/75">
       <header className="px-5 h-16 fixed z-50 right-0 left-0 top-0 flex items-center justify-between  md:relative md:px-3 border-b dark:border-neutral-800">
         <div className="flex items-center h-full">
           <h1 className="text-xl font-medium">
@@ -87,7 +83,7 @@ export const Sidebar = () => {
       >
         <div className="py-3">
           {tools.map((tool) => {
-            const isActive = router.asPath === tool.link;
+            const isActive = router.pathname === tool.link;
             return (
               <Link href={tool.link} key={tool.link}>
                 <a

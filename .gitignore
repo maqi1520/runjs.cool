@@ -2,6 +2,8 @@ node_modules
 *.log
 .DS_Store
 .next
+.vscode
+.env
 
 public/sw.js
 public/sw.js.map

@@ -1,9 +1,5 @@
 export const tools = [
   {
-    name: "微信排版工具",
-    link: "https://editor.runjs.cool/",
-  },
-  {
     name: "HTML to Markdown",
     link: "/html-to-markdown",
   },
@@ -16,8 +12,12 @@ export const tools = [
     link: "/text-diff",
   },
   {
-    name: "二维码/解码",
+    name: "二维码 / 解码",
     link: "/qrcode",
+  },
+  {
+    name: "颜色生成",
+    link: "/color",
   },
   {
     name: "JWT 调试",

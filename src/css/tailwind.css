@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import "prismjs/themes/prism-okaidia.css";
+.prose :where(pre):not(:where([class~="not-prose"] *)) {
+  background-color: #272822;
+}
+.prose pre code {
+  color: #f8f8f2;
+}
