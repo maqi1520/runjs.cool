@@ -137,7 +137,18 @@ export default function Interview({
           <div className="divide-y divide-neutral-100 dark:divide-neutral-700">
             {data.map((question) => {
               return (
-                <Link key={question._id} href={`/interview/${question._id}`}>
+                <Link
+                  key={question._id}
+                  href={{
+                    pathname: `/interview/${question._id}`,
+                    query: JSON.parse(
+                      JSON.stringify({
+                        ...query,
+                        page: undefined,
+                      })
+                    ),
+                  }}
+                >
                   <a className="py-8 flex flex-wrap md:flex-nowrap group">
                     <div className="md:w-48 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
                       <span className="font-semibold title-font text-neutral-700 dark:text-slate-400">

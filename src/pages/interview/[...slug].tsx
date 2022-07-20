@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { SampleLayout } from "@/components/Layout";
 import { marked } from "marked";
 import clsx from "clsx";
@@ -59,6 +60,9 @@ export default function InterviewDetail({ next, prev, data }: JSONResponse) {
   const options = opts.options;
   const isMulti = opts.isMulti;
   const codes = ["A", "B", "C", "D", "E", "F", "G"];
+  const router = useRouter();
+
+  const query = router.query;
 
   return (
     <>
@@ -150,23 +154,47 @@ export default function InterviewDetail({ next, prev, data }: JSONResponse) {
           </div>
           <footer>
             <div className="flex flex-col text-sm font-medium sm:flex-row sm:justify-between sm:text-base">
-              {prev && (
+              {prev ? (
                 <div className="pt-4 xl:pt-8">
-                  <Link href={`/interview/${prev._id}`}>
+                  <Link
+                    href={{
+                      pathname: `/interview/${prev._id}`,
+                      query: JSON.parse(
+                        JSON.stringify({
+                          ...query,
+                          page: undefined,
+                        })
+                      ),
+                    }}
+                  >
                     <a className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                       &larr; 上一题
                     </a>
                   </Link>
                 </div>
+              ) : (
+                <div />
               )}
-              {next && (
+              {next ? (
                 <div className="pt-4 xl:pt-8">
-                  <Link href={`/interview/${next._id}`}>
+                  <Link
+                    href={{
+                      pathname: `/interview/${next._id}`,
+                      query: JSON.parse(
+                        JSON.stringify({
+                          ...query,
+                          page: undefined,
+                        })
+                      ),
+                    }}
+                  >
                     <a className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                       下一题 &rarr;
                     </a>
                   </Link>
                 </div>
+              ) : (
+                <div />
               )}
             </div>
           </footer>
@@ -178,6 +206,7 @@ export default function InterviewDetail({ next, prev, data }: JSONResponse) {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { slug } = context.params;
+  const { q = "", tagid } = context.query;
 
   const res = await fetch(process.env.NEXT_PUBLIC_API_URL, {
     method: "post",
@@ -187,6 +216,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     body: JSON.stringify({
       action: "detail",
       id: slug[0],
+      title: q,
+      tagid,
     }),
   });
   const { data, next = null, prev = null }: JSONResponse = await res.json();
