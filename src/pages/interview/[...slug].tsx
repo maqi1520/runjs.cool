@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -43,6 +43,10 @@ type JSONResponse = {
 
 export default function InterviewDetail({ next, prev, data }: JSONResponse) {
   const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    setVisible(false);
+  }, [data]);
+
   const categories = { Choice: "选择题", QA: "问答题" };
   const getLevelStar = (level) => {
     var str = "";
@@ -153,7 +157,7 @@ export default function InterviewDetail({ next, prev, data }: JSONResponse) {
             </div>
           </div>
           <footer>
-            <div className="flex flex-col text-sm font-medium sm:flex-row sm:justify-between sm:text-base">
+            <div className="flex flex-row justify-between text-sm font-medium">
               {prev ? (
                 <div className="pt-4 xl:pt-8">
                   <Link

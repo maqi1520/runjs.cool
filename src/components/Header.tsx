@@ -12,7 +12,7 @@ export default function Header({}: Props) {
   return (
     <header className="border-b  dark:border-neutral-50/[0.2]">
       <div className="container max-w-5xl mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-        <nav className="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto">
+        <nav className="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto mb-4 md:mb-0">
           <Link href="/html-to-markdown">
             <a className="mr-5 hover:text-blue-500">工具</a>
           </Link>

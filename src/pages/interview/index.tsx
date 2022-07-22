@@ -100,7 +100,7 @@ export default function Interview({
             </svg>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 mt-10">
+          <div className="grid grid-cols-3 gap-2 md:gap-4 mt-10">
             {tags.map((tag) => {
               return (
                 <Link
@@ -116,7 +116,7 @@ export default function Interview({
                 >
                   <a
                     className={clsx(
-                      "flex items-center border dark:border-neutral-50/[0.2] p-2 rounded cursor-pointer",
+                      "flex flex-col md:flex-row items-center border dark:border-neutral-50/[0.2] p-2 rounded cursor-pointer",
                       {
                         "border-blue-500 dark:border-blue-500":
                           tag.id === +query.tagid,
@@ -126,7 +126,7 @@ export default function Interview({
                     <img
                       src={tag.image}
                       alt={tag.tagName + "ICON"}
-                      className="w-10 h-10 mr-2"
+                      className="w-10 h-10 md:mr-2"
                     />
                     <span>{tag.tagName}</span>
                   </a>
@@ -149,8 +149,8 @@ export default function Interview({
                     ),
                   }}
                 >
-                  <a className="py-8 flex flex-wrap md:flex-nowrap group">
-                    <div className="md:w-48 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
+                  <a className="py-6 md:py-8 flex flex-col md:flex-row flex-wrap md:flex-nowrap group">
+                    <div className="md:w-48 md:mb-0 mb-2 flex-shrink-0 flex justify-between md:flex-col">
                       <span className="font-semibold title-font text-neutral-700 dark:text-slate-400">
                         {tagmap[question.tagId]}
                       </span>
@@ -160,7 +160,7 @@ export default function Interview({
                       </span>
                     </div>
                     <div className="md:flex-grow relative">
-                      <h2 className="text-2xl font-medium text-neutral-900  dark:text-slate-200 title-font mb-2">
+                      <h2 className="text-xl md:text-2xl font-medium text-neutral-900  dark:text-slate-200 title-font mb-2">
                         {question.title}
                       </h2>
                       <span className="mt-1 text-neutral-500  dark:text-slate-400 text-sm">
