@@ -163,6 +163,7 @@ export default function InterviewDetail({ next, prev, data }: JSONResponse) {
                         JSON.stringify({
                           ...query,
                           page: undefined,
+                          slug: undefined,
                         })
                       ),
                     }}
@@ -184,6 +185,7 @@ export default function InterviewDetail({ next, prev, data }: JSONResponse) {
                         JSON.stringify({
                           ...query,
                           page: undefined,
+                          slug: undefined,
                         })
                       ),
                     }}
