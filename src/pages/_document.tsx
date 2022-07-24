@@ -42,13 +42,16 @@ export default function Document() {
           }}
         />
         {/* Global Site Tag (gtag.js) - Google Analytics */}
-        <script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
+        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+          />
+        )}
+        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
@@ -56,8 +59,9 @@ export default function Document() {
               page_path: window.location.pathname,
             });
           `,
-          }}
-        />
+            }}
+          />
+        )}
       </Head>
       <body className="text-neutral-900 dark:text-white bg-white dark:bg-neutral-900">
         <Main />

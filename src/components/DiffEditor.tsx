@@ -84,15 +84,6 @@ export const MONACO_LANGUAGES = [
   "yaml",
 ];
 
-const getMonacoFileUrl = (language: string, filename: string) => {
-  const isTS = language === "typescript";
-  const isJS = language === "javascript";
-  if (isTS || isJS) {
-    return monaco.Uri.file(filename + (isTS ? ".tsx" : ".jsx"));
-  }
-  return undefined;
-};
-
 export default function TextDiffPage() {
   const editorContainer = useRef<HTMLDivElement | null>(null);
   const [language, setLanguage] = useState("text");

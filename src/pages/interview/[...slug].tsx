@@ -3,36 +3,15 @@ import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { SampleLayout } from "@/components/Layout";
+import CollectBtn from "@/components/CollectBtn";
 import { marked } from "marked";
 import clsx from "clsx";
 import dynamic from "next/dynamic";
+import { Question, Tag, Opts } from "@/types";
 
 const HighlightCode = dynamic(() => import("@/components/HighlightCode"), {
   ssr: false,
 });
-
-interface Opts {
-  isMulti: string;
-  options: string[];
-  answer: string[];
-}
-
-export interface Question {
-  _id: string;
-  category: string;
-  title: string;
-  desc: string;
-  options?: string;
-  explanation: string;
-  level: number;
-  tagId: number;
-}
-
-export interface Tag {
-  id: number;
-  tagName: string;
-  image: string;
-}
 
 type JSONResponse = {
   next?: Question;
@@ -77,17 +56,20 @@ export default function InterviewDetail({ next, prev, data }: JSONResponse) {
           </h1>
           <div className="mt-12 prose max-w-none dark:prose-dark">
             <HighlightCode html={data.desc}></HighlightCode>
-            <div className="mt-3">
-              <span className="px-3 py-1 bg-blue-500 border border-blue-500  rounded text-white mr-3">
-                {categories[data.category]}
-              </span>
-              <span className="font-semibold">难度：</span>
-              <span
-                className="text-orange-500 ml-1"
-                role={"level:" + data.level}
-              >
-                {getLevelStar(data.level)}
-              </span>
+            <div className="mt-3 flex justify-between">
+              <div>
+                <span className="px-3 py-1 bg-blue-500 border border-blue-500  rounded text-white mr-3">
+                  {categories[data.category]}
+                </span>
+                <span className="font-semibold">难度：</span>
+                <span
+                  className="text-orange-500 ml-1"
+                  role={"level:" + data.level}
+                >
+                  {getLevelStar(data.level)}
+                </span>
+              </div>
+              <CollectBtn q_id={data._id} />
             </div>
 
             {options && (
@@ -212,7 +194,7 @@ export default function InterviewDetail({ next, prev, data }: JSONResponse) {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { slug } = context.params;
-  const { q = "", tagid } = context.query;
+  const { q = "", tagid, source } = context.query;
 
   const res = await fetch(process.env.NEXT_PUBLIC_API_URL, {
     method: "post",
@@ -224,6 +206,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       id: slug[0],
       title: q,
       tagid,
+      source,
     }),
   });
   const { data, next = null, prev = null }: JSONResponse = await res.json();

@@ -3,8 +3,12 @@ import LightIcon from "@/components/Icon/LightIcon";
 import DarkIcon from "@/components/Icon/DarkIcon";
 import LogoIcon from "@/components/Icon/LogoIcon";
 import { toggleTheme } from "@/utils/themes";
-import LoginBtn from "./LoginBtn";
 import Link from "next/link";
+
+import dynamic from "next/dynamic";
+const LoginBtn = dynamic(() => import("@/components/LoginBtn"), {
+  ssr: false,
+});
 
 type Props = {};
 

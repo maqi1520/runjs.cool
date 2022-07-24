@@ -2,24 +2,11 @@ import React from "react";
 import { GetServerSidePropsContext } from "next";
 import { SampleLayout } from "@/components/Layout";
 import { Button } from "@/components/Button";
+import InterviewItem from "@/components/InterviewItem";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import clsx from "clsx";
-
-export interface Question {
-  _id: string;
-  category: string;
-  title: string;
-  desc: string;
-  level: number;
-  tagId: number;
-}
-
-export interface Tag {
-  id: number;
-  tagName: string;
-  image: string;
-}
+import { Question, Tag } from "@/types";
 
 type JSONResponse = {
   hasNext: boolean;
@@ -36,23 +23,10 @@ export default function Interview({
   page,
   hasNext,
 }: JSONResponse) {
-  console.log(page);
-
   let tagmap = {};
   for (const tag of tags) {
     tagmap[tag.id] = tag.tagName;
   }
-  const categories = { Choice: "选择题", QA: "问答题" };
-  const getLevelStar = (level) => {
-    var str = "";
-    var roundLevel = Math.floor(level);
-    for (var i = 0; i < roundLevel; i++) {
-      str += "★";
-    }
-
-    if (level - roundLevel > 0) str += "☆";
-    return str;
-  };
 
   const router = useRouter();
 
@@ -72,7 +46,7 @@ export default function Interview({
   };
 
   return (
-    <SampleLayout>
+    <SampleLayout title={`刷题 - 前端面试题`}>
       <section className="text-neutral-600 dark:text-slate-200 body-font overflow-hidden">
         <div className="container max-w-5xl px-5 py-16 mx-auto">
           <div className="relative">
@@ -137,59 +111,12 @@ export default function Interview({
           <div className="divide-y divide-neutral-100 dark:divide-neutral-700">
             {data.map((question) => {
               return (
-                <Link
+                <InterviewItem
+                  tagmap={tagmap}
                   key={question._id}
-                  href={{
-                    pathname: `/interview/${question._id}`,
-                    query: JSON.parse(
-                      JSON.stringify({
-                        ...query,
-                        page: undefined,
-                      })
-                    ),
-                  }}
-                >
-                  <a className="py-6 md:py-8 flex flex-col md:flex-row flex-wrap md:flex-nowrap group">
-                    <div className="md:w-48 md:mb-0 mb-2 flex-shrink-0 flex justify-between md:flex-col">
-                      <span className="font-semibold title-font text-neutral-700 dark:text-slate-400">
-                        {tagmap[question.tagId]}
-                      </span>
-
-                      <span className="mt-1 text-neutral-500 dark:text-slate-300 text-sm">
-                        {categories[question.category]}
-                      </span>
-                    </div>
-                    <div className="md:flex-grow relative">
-                      <h2 className="text-xl md:text-2xl font-medium text-neutral-900  dark:text-slate-200 title-font mb-2">
-                        {question.title}
-                      </h2>
-                      <span className="mt-1 text-neutral-500  dark:text-slate-400 text-sm">
-                        难度：
-                        <span
-                          className="text-orange-500"
-                          role={"level:" + question.level}
-                        >
-                          {getLevelStar(question.level)}
-                        </span>
-                      </span>
-
-                      <span className="text-blue-500 absolute right-0 top-1/2 -mt-[16px] opacity-0 -translate-x-6 ease-out duration-300 group-hover:opacity-100 group-hover:translate-x-0">
-                        <svg
-                          className="w-10 h-10 "
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M5 12h14"></path>
-                          <path d="M12 5l7 7-7 7"></path>
-                        </svg>
-                      </span>
-                    </div>
-                  </a>
-                </Link>
+                  query={query}
+                  question={question}
+                />
               );
             })}
           </div>
