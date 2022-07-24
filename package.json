@@ -46,7 +46,6 @@
     "next-pwa": "^5.4.4",
     "p-queue": "^7.2.0",
     "postcss": "^8.4.5",
-    "preact": "^10.5.14",
     "prettier": "^2.3.2",
     "prismjs": "^1.28.0",
     "qrcode": "^1.4.4",

@@ -28,7 +28,6 @@ specifiers:
   next-pwa: ^5.4.4
   p-queue: ^7.2.0
   postcss: ^8.4.5
-  preact: ^10.5.14
   prettier: ^2.3.2
   prismjs: ^1.28.0
   qrcode: ^1.4.4
@@ -75,7 +74,6 @@ devDependencies:
   next-pwa: 5.4.4_next@12.1.0
   p-queue: 7.2.0
   postcss: 8.4.5
-  preact: 10.6.4
   prettier: 2.5.1
   prismjs: 1.28.0
   qrcode: 1.5.0
@@ -3225,10 +3223,6 @@ packages:
       nanoid: 3.1.30
       picocolors: 1.0.0
       source-map-js: 1.0.1
-
-  /preact/10.6.4:
-    resolution: {integrity: sha512-WyosM7pxGcndU8hY0OQlLd54tOU+qmG45QXj2dAYrL11HoyU/EzOSTlpJsirbBr1QW7lICxSsVJJmcmUglovHQ==}
-    dev: true
 
   /prettier/2.5.1:
     resolution: {integrity: sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==}
