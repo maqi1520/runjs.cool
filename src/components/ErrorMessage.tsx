@@ -1,9 +1,9 @@
-import clsx from "clsx"
+import clsx from "clsx";
 
 export const ErrorMessage: React.FC<
   React.HTMLAttributes<HTMLDivElement> & { message?: string }
 > = ({ message, className, ...props }) => {
-  if (!message) return null
+  if (!message) return null;
   return (
     <div
       {...props}
@@ -28,5 +28,5 @@ export const ErrorMessage: React.FC<
       </svg>
       <div className="flex-1 pl-2">{message}</div>
     </div>
-  )
-}
+  );
+};

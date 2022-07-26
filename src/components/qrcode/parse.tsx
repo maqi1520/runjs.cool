@@ -82,14 +82,18 @@ export default function QrcodeParserPage() {
         </label>
         {imageSrc && (
           <div className="mt-5">
-            <img src={imageSrc} />
+            <img className="border" src={imageSrc} />
           </div>
         )}
 
         {result && (
-          <div>
-            <CodeBlock code={result} />
-            <CopyButton className="mt-3" getValue={() => result} />
+          <div className="mt-2 flex">
+            <div className="flex-auto">
+              <CodeBlock code={result} />
+            </div>
+            <div className="flex-none">
+              <CopyButton className=" ml-2" getValue={() => result} />
+            </div>
           </div>
         )}
       </div>
