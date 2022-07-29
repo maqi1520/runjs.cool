@@ -54,9 +54,21 @@ const getUserInfo = async (scene: string) => {
 
 export default function LoginBtn() {
   let [isOpen, setIsOpen] = useState(false);
+  let countRef = useRef(0);
   const timeRef = useRef(null);
+  // 二维码失效
+  const [invalid, setInvalid] = useState(false);
 
   const loopGetUserInfo = (scene: string, callback: (d: User) => void) => {
+    if (countRef.current > 3) {
+      if (timeRef.current) {
+        clearTimeout(timeRef.current);
+      }
+      timeRef.current = null;
+      setInvalid(true);
+      return;
+    }
+    countRef.current++;
     timeRef.current = setTimeout(() => {
       getUserInfo(scene)
         .then((res) => {
@@ -93,8 +105,17 @@ export default function LoginBtn() {
     if (timeRef.current) {
       clearTimeout(timeRef.current);
     }
+    timeRef.current = 0;
+    setInvalid(false);
     timeRef.current = null;
   }
+  const handleRetry = () => {
+    console.log(123);
+
+    countRef.current = 0;
+    setInvalid(false);
+    showModal();
+  };
 
   useEffect(() => {
     return () => {
@@ -230,8 +251,24 @@ export default function LoginBtn() {
                   >
                     微信扫码登录
                   </Dialog.Title>
-                  <div className="py-10 flex place-content-center">
-                    <img className="w-[215px] h-[215px]" src={src} alt=""></img>
+                  <div className="py-10 flex place-content-center ">
+                    <div
+                      className="w-[215px] h-[215px] relative
+                    "
+                    >
+                      <img className="w-full h-full" src={src} alt=""></img>
+                      {invalid && (
+                        <div
+                          onClick={handleRetry}
+                          className="absolute inset-0 bg-black bg-opacity-60 text-white flex justify-center items-center"
+                        >
+                          <div>
+                            <div>二维码已过期</div>
+                            <div>点击重试</div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   <div className="pt-4 flex place-content-center border-t">

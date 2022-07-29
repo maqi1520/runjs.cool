@@ -1,5 +1,4 @@
 import React from "react";
-import { GetServerSidePropsContext } from "next";
 import { SampleLayout } from "@/components/Layout";
 import { Button } from "@/components/Button";
 import InterviewItem from "@/components/InterviewItem";
@@ -7,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 import { Question, Tag } from "@/types";
+import { useAsync } from "react-use";
 
 type JSONResponse = {
   hasNext: boolean;
@@ -16,21 +16,45 @@ type JSONResponse = {
   tags: Tag[];
 };
 
-export default function Interview({
-  data,
-  tags,
-  q,
-  page,
-  hasNext,
-}: JSONResponse) {
+export default function Interview() {
+  const router = useRouter();
+
+  const query = router.query;
+  const { q = "", tagid, page = 1 } = query;
+
+  const { loading, value } = useAsync(async () => {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL, {
+      method: "post",
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+      body: JSON.stringify({
+        action: "list",
+        page,
+        title: q,
+        tagid,
+      }),
+    });
+
+    const { data, tags = null, hasNext }: JSONResponse = await res.json();
+
+    return {
+      data,
+      tags,
+      hasNext,
+    };
+  }, [q, tagid, page]);
+
+  const { data, tags, hasNext } = value || {
+    data: [],
+    tags: [],
+    hasNext: false,
+  };
+
   let tagmap = {};
   for (const tag of tags) {
     tagmap[tag.id] = tag.tagName;
   }
-
-  const router = useRouter();
-
-  const query = router.query;
 
   const onKeyDown = (e) => {
     if (e.keyCode === 13) {
@@ -126,7 +150,7 @@ export default function Interview({
                 pathname: "/interview",
                 query: {
                   ...query,
-                  page: page - 1,
+                  page: +page - 1,
                 },
               }}
             >
@@ -139,7 +163,7 @@ export default function Interview({
                 pathname: "/interview",
                 query: {
                   ...query,
-                  page: page + 1,
+                  page: +page + 1,
                 },
               }}
             >
@@ -152,33 +176,4 @@ export default function Interview({
       </section>
     </SampleLayout>
   );
-}
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { q = "", tagid, page = 1 } = context.query;
-
-  const res = await fetch(process.env.NEXT_PUBLIC_API_URL, {
-    method: "post",
-    headers: {
-      "content-type": "application/json;charset=UTF-8",
-    },
-    body: JSON.stringify({
-      action: "list",
-      page,
-      title: q,
-      tagid,
-    }),
-  });
-
-  const { data, tags = null, hasNext }: JSONResponse = await res.json();
-
-  return {
-    props: {
-      data,
-      tags,
-      page: +page,
-      hasNext,
-      q,
-    }, // will be passed to the page component as props
-  };
 }

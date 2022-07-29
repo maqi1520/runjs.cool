@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { SampleLayout } from "@/components/Layout";
 import CollectBtn from "@/components/CollectBtn";
+import { getLevelStar } from "@/utils/question";
 import { marked } from "marked";
 import clsx from "clsx";
 import dynamic from "next/dynamic";
 import { Question, Tag, Opts } from "@/types";
+import { useAsync } from "react-use";
 
 const HighlightCode = dynamic(() => import("@/components/HighlightCode"), {
   ssr: false,
@@ -20,32 +21,60 @@ type JSONResponse = {
   tags: Tag[];
 };
 
-export default function InterviewDetail({ next, prev, data }: JSONResponse) {
+export default function InterviewDetail() {
+  const router = useRouter();
+
+  const query = router.query;
+
+  const { q = "", tagid, source, slug } = query;
+
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     setVisible(false);
-  }, [data]);
+  }, [slug]);
+
+  const { loading, value } = useAsync(async () => {
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL, {
+      method: "post",
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+      body: JSON.stringify({
+        action: "detail",
+        id: slug[0],
+        title: q,
+        tagid,
+        source,
+      }),
+    });
+    const {
+      data,
+      next = null,
+      prev = null,
+    } = (await res.json()) as JSONResponse;
+
+    return {
+      data: {
+        ...data,
+        desc: marked.parse(data.desc || ""),
+        explanation: marked.parse(data.explanation || ""),
+      },
+      next,
+      prev,
+    };
+  }, [slug]);
+
+  const defaultValue: Partial<Question> = {};
+
+  const { next, prev, data } = value || { data: defaultValue };
 
   const categories = { Choice: "选择题", QA: "问答题" };
-  const getLevelStar = (level) => {
-    var str = "";
-    var roundLevel = Math.floor(level);
-    for (var i = 0; i < roundLevel; i++) {
-      str += "★";
-    }
-
-    if (level - roundLevel > 0) str += "☆";
-    return str;
-  };
 
   const isChoice = !!data.options;
   const opts: Opts = isChoice ? JSON.parse(data.options) : {};
   const options = opts.options;
   const isMulti = opts.isMulti;
   const codes = ["A", "B", "C", "D", "E", "F", "G"];
-  const router = useRouter();
-
-  const query = router.query;
 
   return (
     <>
@@ -145,13 +174,11 @@ export default function InterviewDetail({ next, prev, data }: JSONResponse) {
                   <Link
                     href={{
                       pathname: `/interview/${prev._id}`,
-                      query: JSON.parse(
-                        JSON.stringify({
-                          ...query,
-                          page: undefined,
-                          slug: undefined,
-                        })
-                      ),
+                      query: {
+                        q,
+                        tagid,
+                        source,
+                      },
                     }}
                   >
                     <a className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
@@ -167,13 +194,11 @@ export default function InterviewDetail({ next, prev, data }: JSONResponse) {
                   <Link
                     href={{
                       pathname: `/interview/${next._id}`,
-                      query: JSON.parse(
-                        JSON.stringify({
-                          ...query,
-                          page: undefined,
-                          slug: undefined,
-                        })
-                      ),
+                      query: {
+                        q,
+                        tagid,
+                        source,
+                      },
                     }}
                   >
                     <a className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
@@ -190,36 +215,4 @@ export default function InterviewDetail({ next, prev, data }: JSONResponse) {
       </SampleLayout>
     </>
   );
-}
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { slug } = context.params;
-  const { q = "", tagid, source } = context.query;
-
-  const res = await fetch(process.env.NEXT_PUBLIC_API_URL, {
-    method: "post",
-    headers: {
-      "content-type": "application/json;charset=UTF-8",
-    },
-    body: JSON.stringify({
-      action: "detail",
-      id: slug[0],
-      title: q,
-      tagid,
-      source,
-    }),
-  });
-  const { data, next = null, prev = null }: JSONResponse = await res.json();
-
-  return {
-    props: {
-      data: {
-        ...data,
-        desc: marked.parse(data.desc || ""),
-        explanation: marked.parse(data.explanation || ""),
-      },
-      next,
-      prev,
-    }, // will be passed to the page component as props
-  };
 }
