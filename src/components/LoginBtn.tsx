@@ -60,7 +60,7 @@ export default function LoginBtn() {
   const [invalid, setInvalid] = useState(false);
 
   const loopGetUserInfo = (scene: string, callback: (d: User) => void) => {
-    if (countRef.current > 3) {
+    if (countRef.current > 20) {
       if (timeRef.current) {
         clearTimeout(timeRef.current);
       }
@@ -262,7 +262,7 @@ export default function LoginBtn() {
                           onClick={handleRetry}
                           className="absolute inset-0 bg-black bg-opacity-60 text-white flex justify-center items-center"
                         >
-                          <div>
+                          <div className="text-center">
                             <div>二维码已过期</div>
                             <div>点击重试</div>
                           </div>
