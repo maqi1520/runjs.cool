@@ -6,7 +6,7 @@ import { icons } from "@/components/Icon/NavIcon";
 const handleScroll = () => {
   for (const item of Array.from(document.querySelectorAll(".js-category"))) {
     if (
-      item.getBoundingClientRect().y < 200 &&
+      item.getBoundingClientRect().y < 100 &&
       item.getBoundingClientRect().y > 0
     ) {
       const current = document.querySelector(".js-menu-item-" + item.id);
