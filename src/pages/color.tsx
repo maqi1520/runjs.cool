@@ -321,7 +321,7 @@ export default function QrcodePage() {
       </section>
 
       <section className="container px-4 mx-auto mb-12">
-        <div className="flex flex-wrap bg-blue-500/10 px-10">
+        <div className="flex flex-wrap bg-blue-500/20 px-10">
           {tabs.map((tab) => (
             <span
               key={tab.id}

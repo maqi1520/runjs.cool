@@ -88,7 +88,7 @@ export const Sidebar = () => {
               <Link href={tool.link} key={tool.link}>
                 <a
                   className={clsx(`px-4 py-3 flex relative`, {
-                    "text-blue-500 bg-blue-500/10 after:absolute after:-right-px after:top-0  after:w-1 after:bottom-0 after:bg-blue-500":
+                    "text-blue-500 bg-blue-500/20 after:absolute after:-right-px after:top-0  after:w-1 after:bottom-0 after:bg-blue-500":
                       isActive,
                   })}
                 >

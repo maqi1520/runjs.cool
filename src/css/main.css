@@ -19,3 +19,14 @@ html {
   file:bg-blue-50 file:text-blue-600
   hover:file:bg-blue-100;
 }
+.js-menu-item {
+  @apply px-3 py-1 rounded cursor-pointer;
+}
+.active {
+  @apply bg-blue-500/20 text-blue-500;
+}
+
+.nav-icon svg {
+  width: 100%;
+  height: 100%;
+}
