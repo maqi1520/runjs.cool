@@ -7,7 +7,7 @@ const handleScroll = () => {
   for (const item of Array.from(document.querySelectorAll(".js-category"))) {
     if (
       item.getBoundingClientRect().y < 100 &&
-      item.getBoundingClientRect().y > 0
+      item.getBoundingClientRect().y >= 0
     ) {
       const current = document.querySelector(".js-menu-item-" + item.id);
       if (!current.className.includes("active")) {
