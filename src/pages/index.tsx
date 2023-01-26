@@ -82,12 +82,7 @@ export default function HomePage() {
                           target="_blank"
                         >
                           <div className="flex items-center">
-                            <img
-                              src={nav.logoUrl}
-                              alt={nav.title + " logo"}
-                              className="w-8 h-8 mr-1 flex-none"
-                            />
-                            <p className="flex-auto capitalize">{nav.title}</p>
+                            <span className="flex-auto">{nav.title}</span>
                           </div>
                           <div className="mt-1 text-neutral-500 dark:text-slate-300 text-xs truncate normal-case">
                             {nav.desc}
