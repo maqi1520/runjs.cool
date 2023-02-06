@@ -14,8 +14,8 @@ type Props = {};
 
 export default function Header({}: Props) {
   return (
-    <header className="border-b  dark:border-neutral-50/[0.2]">
-      <div className="container max-w-5xl mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+    <header className="border-b bg-white z-10  dark:border-neutral-50/[0.2] ">
+      <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <nav className="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto mb-4 md:mb-0">
           <Link href="/html-to-markdown">
             <a className="mr-5 hover:text-blue-500">工具</a>
@@ -29,6 +29,20 @@ export default function Header({}: Props) {
             className="mr-5 hover:text-blue-500"
           >
             写作
+          </a>
+          <a
+            href="https://ppt.runjs.cool/"
+            target="_blank"
+            className="mr-5 hover:text-blue-500"
+          >
+            幻灯片
+          </a>
+          <a
+            href="https://cv.runjs.cool/"
+            target="_blank"
+            className="mr-5 hover:text-blue-500"
+          >
+            写简历
           </a>
           <a
             href="https://excalidraw.com/"
