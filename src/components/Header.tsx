@@ -14,7 +14,7 @@ type Props = {};
 
 export default function Header({}: Props) {
   return (
-    <header className="border-b bg-white z-10  dark:border-neutral-50/[0.2] ">
+    <header className="border-b bg-white z-10  dark:border-neutral-50/[0.2] dark:bg-neutral-900">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <nav className="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto mb-4 md:mb-0">
           <Link href="/html-to-markdown">
