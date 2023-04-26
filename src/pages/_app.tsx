@@ -1,6 +1,7 @@
 import "../css/tailwind.css";
 import "../css/main.css";
 
+import { Analytics } from "@vercel/analytics/react";
 import { SWUpdatePopup } from "@/components/SWUpdatePopup";
 
 function MyApp({ Component, pageProps }) {
@@ -8,6 +9,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <Component {...pageProps} />
       <SWUpdatePopup />
+      <Analytics />
     </>
   );
 }
