@@ -24,7 +24,7 @@ export default function Header({}: Props) {
             <a className="mr-5 hover:text-blue-500">刷题</a>
           </Link>
           <a
-            href="https://editor.runjs.cool/"
+            href="https://mdxnotes.com/"
             target="_blank"
             className="mr-5 hover:text-blue-500"
           >
