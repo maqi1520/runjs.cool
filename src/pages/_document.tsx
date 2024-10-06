@@ -62,6 +62,10 @@ export default function Document() {
             }}
           />
         )}
+        <meta
+          name="google-adsense-account"
+          content="ca-pub-9163539254569883"
+        ></meta>
       </Head>
       <body className="text-neutral-900 dark:text-white bg-white dark:bg-neutral-900">
         <Main />
